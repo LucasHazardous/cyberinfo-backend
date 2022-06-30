@@ -1,0 +1,18 @@
+{
+  "name": "cyberinfo-backend",
+  "version": "1.0.0",
+  "description": "Backend for Cyberinfo project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand"
+  },
+  "keywords": [
+    "mongodb",
+    "mongoose",
+    "javascript",
+    "express",
+    "helmet.js"
+  ],
+  "author": "LucasHazardous",
+  "license": "MIT"
+}
