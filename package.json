@@ -2,7 +2,7 @@
   "name": "cyberinfo-backend",
   "version": "1.0.0",
   "description": "Backend for Cyberinfo project.",
-  "main": "index.js",
+  "main": "./src/app.js",
   "scripts": {
     "test": "jest --runInBand"
   },
