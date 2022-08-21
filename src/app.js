@@ -3,7 +3,9 @@ const app = express();
 const helmet = require("helmet");
 const compression = require("compression");
 const {
-    port
+    port,
+    requestsTimeFrame,
+    maxRequestsPerTimeFrame,
 } = require("./config/config");
 
 require("dotenv").config();
@@ -13,6 +15,17 @@ mongoose.connect(process.env.MONGO_URI);
 const {
     connection
 } = require("mongoose");
+
+const rateLimit = require("express-rate-limit");
+
+const limiter = rateLimit({
+    windowMs: requestsTimeFrame,
+    max: maxRequestsPerTimeFrame,
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+app.use(limiter);
 
 app.use(helmet());
 app.use(compression());
