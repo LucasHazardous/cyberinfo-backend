@@ -38,6 +38,7 @@ app.use(express.json());
 connection.once("open", () => {
     app.use("/api/user", require("./api/user"));
     app.use("/api/article", require("./api/article"));
+    app.use("/api/newsletter", require("./api/newsletter"));
 
     app.listen(port, () => {
         console.log(`Listening on port ${port}`);
