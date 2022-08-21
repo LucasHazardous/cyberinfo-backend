@@ -1,6 +1,10 @@
 const Session = require("../model/session");
 const User = require("../model/user");
 const crypto = require("crypto");
+const {
+    authorizationErrorMsg,
+    authenticationErrorMsg
+} = require("../config/config");
 
 function generateToken(username) {
     return crypto
@@ -34,7 +38,7 @@ module.exports = {
             });
             return token;
         }
-        return "";
+        return authenticationErrorMsg;
     },
     async logout(token) {
         await Session.deleteOne({
@@ -50,12 +54,10 @@ module.exports = {
         };
 
         await User.create(newUser);
-
-        return "";
     },
     async authorizeUser(token) {
         if (!(await Session.findOne({
                 token: token
-            }))) throw "Authorization failed";
+            }))) throw authorizationErrorMsg;
     }
 };
