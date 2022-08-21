@@ -3,13 +3,14 @@ const user_service = require("./user");
 const config = require("../config/config");
 
 module.exports = {
-    async createArticle(username, title, content, token) {
+    async createArticle(title, content, image, categoryId, token) {
         await user_service.authorizeUser(token);
 
         await Article.create({
-            username: username,
             title: title,
-            content: content
+            content: content,
+            image: image,
+            categoryId: categoryId,
         });
     },
     async deleteArticle(id, token) {
@@ -21,6 +22,8 @@ module.exports = {
         return await Article.findById(id);
     },
     async getArticleList(page) {
-        return await Article.find({}).skip(page).sort({_id: -1}).limit(config.documentsPerPage);
+        return await Article.find({}).skip(page).sort({
+            _id: -1
+        }).limit(config.documentsPerPage);
     }
 };
