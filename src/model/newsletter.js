@@ -11,11 +11,8 @@ const sessionSchema = new Schema({
     },
     verificationToken: {
         type: String,
-        unique: true
-    },
-    verified: {
-        type: Boolean,
-        default: false
+        unique: true,
+        sparse: true
     }
 }, {
     versionKey: false
