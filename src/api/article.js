@@ -29,10 +29,10 @@ router.get("/:id", param("id").isString().isMongoId(), (req, res) => {
         .catch(err => sendErrorStatusCode(err, res));
 });
 
-router.post("/", body("username").isString(), body("title").isString(), body("content").isString(), body("token").isString().isHexadecimal(), (req, res) => {
+router.post("/", body("title").isString(), body("content").isString(), body("image").isString(), body("categoryId").isString(), body("token").isString().isHexadecimal(), (req, res) => {
     if (handleValidationError(req, res)) return;
 
-    article_service.createArticle(req.body.username, req.body.title, req.body.content, req.body.token)
+    article_service.createArticle(req.body.title, req.body.content, req.body.image, req.body.categoryId, req.body.token)
         .then(result => res.sendStatus(200))
         .catch(err => sendErrorStatusCode(err, res));
 });
