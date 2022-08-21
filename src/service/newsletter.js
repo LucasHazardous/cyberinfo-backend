@@ -1,5 +1,9 @@
 const Newsletter = require("../model/newsletter");
 const crypto = require("crypto");
+const {
+    emailTransport,
+    generateVerificationEmail
+} = require("../config/config");
 
 function generateVerificationToken(email) {
     return crypto
@@ -16,17 +20,16 @@ module.exports = {
             email: email,
             verificationToken: verificationToken
         });
+
+        emailTransport.sendMail(generateVerificationEmail(verificationToken, email));
     },
     async verify(verificationToken) {
-        await Newsletter.findOneAndUpdate({
+        await Newsletter.updateOne({
             verificationToken: verificationToken
         }, {
-            verified: true,
             $unset: {
                 verificationToken: 1
             }
-        }, {
-            new: true
         });
     }
 };
