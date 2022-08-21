@@ -4,8 +4,7 @@ const router = express.Router();
 const user_service = require("../service/user");
 
 const {
-    body,
-    validationResult
+    body
 } = require('express-validator');
 
 const {
@@ -13,18 +12,14 @@ const {
 } = require("../config/config");
 
 const {
-    sendErrorStatusCode
+    sendErrorStatusCode,
+    handleValidationError
 } = require("../error/api");
 
 router.post("/login", body("username").isString(), body("password").isString().isLength({
     min: minPasswordLength
 }), (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            errors: errors.array()
-        });
-    }
+    if (handleValidationError(req, res)) return;
 
     user_service.login(req.body.username, req.body.password)
         .then(token => res.json({
@@ -34,12 +29,7 @@ router.post("/login", body("username").isString(), body("password").isString().i
 });
 
 router.post("/logout", body("token").isString().isHexadecimal(), (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            errors: errors.array()
-        });
-    }
+    if (handleValidationError(req, res)) return;
 
     user_service.logout(req.body.token)
         .then(result => res.sendStatus(200))
@@ -49,12 +39,7 @@ router.post("/logout", body("token").isString().isHexadecimal(), (req, res) => {
 router.post("/", body("username").isString(), body("password").isString().isLength({
     min: minPasswordLength
 }), body("token").isString().isHexadecimal(), (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            errors: errors.array()
-        });
-    }
+    if (handleValidationError(req, res)) return;
 
     user_service.createUser(req.body.username, req.body.password, req.body.token)
         .then(result => res.sendStatus(200))
