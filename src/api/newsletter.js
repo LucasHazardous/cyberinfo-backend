@@ -29,4 +29,12 @@ router.get("/verify/:verificationToken", param("verificationToken").isString(), 
         .catch(err => sendErrorStatusCode(err, res));
 });
 
+router.post("/publish", body("subject").isString(), body("message_plain").isString(), body("message_html").isString(), body("token").isString().isHexadecimal(), (req, res) => {
+    if (handleValidationError(req, res)) return;
+
+    newsletter_service.sendNewsletterToVerifiedPeople(req.body.subject, req.body.message_plain, req.body.message_html, req.body.token)
+        .then(result => res.sendStatus(200))
+        .catch(err => sendErrorStatusCode(err, res));
+});
+
 module.exports = router;
