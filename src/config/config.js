@@ -18,13 +18,5 @@ module.exports = {
             pass: process.env.EMAIL_PASSWORD
         }
     }),
-    generateVerificationEmail(verificationToken, email) {
-        return {
-            from: '"Cyberinfo Newsletter" <newsletter@cyberinfo.website>',
-            to: email,
-            subject: "Newsletter verification",
-            text: `localhost/api/newsletter/verify/${verificationToken}`,
-            html: `<a>localhost/api/newsletter/verify/${verificationToken}</a>`
-        }
-    }
+    email_address: process.env.EMAIL_USER
 };
