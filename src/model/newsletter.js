@@ -3,7 +3,7 @@ const {
     Schema
 } = mongoose;
 
-const sessionSchema = new Schema({
+const newsletterSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -18,4 +18,4 @@ const sessionSchema = new Schema({
     versionKey: false
 });
 
-module.exports = mongoose.model("Newsletter", sessionSchema);
+module.exports = mongoose.model("Newsletter", newsletterSchema);
