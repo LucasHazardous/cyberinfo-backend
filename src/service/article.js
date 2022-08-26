@@ -25,5 +25,14 @@ module.exports = {
         return await Article.find({}).skip(page).sort({
             _id: -1
         }).limit(config.documentsPerPage);
+    },
+    async likeArticle(articleTitle) {
+        await Article.updateOne({
+            title: articleTitle
+        }, {
+            $inc: {
+                likes: 1
+            }
+        });
     }
 };
