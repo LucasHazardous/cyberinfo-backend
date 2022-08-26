@@ -45,4 +45,12 @@ router.delete("/:id", param("id").isString().isMongoId(), body("token").isString
         .catch(err => sendErrorStatusCode(err, res));
 });
 
+router.get("/like/:articleTitle", param("articleTitle").isString(), (req, res) => {
+    if (handleValidationError(req, res)) return;
+
+    article_service.likeArticle(req.params.articleTitle)
+        .then(result => res.sendStatus(200))
+        .catch(err => sendErrorStatusCode(err, res));
+});
+
 module.exports = router;
