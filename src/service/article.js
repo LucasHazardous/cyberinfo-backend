@@ -6,11 +6,15 @@ module.exports = {
     async createArticle(title, content, image, categoryId, token) {
         await user_service.authorizeUser(token);
 
-        await Article.create({
+        await Article.findOneAndUpdate({
+            title: title
+        }, {
             title: title,
             content: content,
             image: image,
             categoryId: categoryId,
+        }, {
+            upsert: true
         });
     },
     async deleteArticle(id, token) {
