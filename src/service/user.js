@@ -20,6 +20,19 @@ function hashPassword(password) {
         .digest("base64");
 }
 
+async function createAdminIfNeeded() {
+    if (await User.find({
+            admin: true
+        }).count() === 0)
+        await User.create({
+            username: process.env.ADMIN_USERNAME,
+            password: hashPassword(process.env.ADMIN_PASSWORD),
+            admin: true
+        });
+}
+
+createAdminIfNeeded().catch(err => console.log(err));
+
 module.exports = {
     async login(username, password) {
         if (await User.findOne({
@@ -46,7 +59,7 @@ module.exports = {
         });
     },
     async createUser(username, password, token) {
-        await this.authorizeUser(token);
+        await this.authorizeAdmin(token);
 
         const newUser = {
             username: username,
@@ -55,9 +68,26 @@ module.exports = {
 
         await User.create(newUser);
     },
+    async deleteUser(username, token) {
+        await this.authorizeAdmin(token);
+
+        await User.deleteOne({
+            username: username
+        });
+    },
     async authorizeUser(token) {
         if (!(await Session.findOne({
                 token: token
             }))) throw authorizationErrorMsg;
+    },
+    async authorizeAdmin(token) {
+        const sessionData = await Session.findOne({
+            token: token
+        });
+        if (!sessionData) throw authorizationErrorMsg;
+        const userData = await User.findOne({
+            username: sessionData.username
+        });
+        if (!userData.admin) throw authorizationErrorMsg;
     }
 };
