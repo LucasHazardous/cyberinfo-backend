@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
+const {
+    Schema
+} = mongoose;
 
 const userSchema = new Schema({
     username: {
@@ -10,6 +12,11 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    admin: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 }, {
     versionKey: false
