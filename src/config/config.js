@@ -18,5 +18,6 @@ module.exports = {
             pass: process.env.EMAIL_PASSWORD
         }
     }),
-    email_address: process.env.EMAIL_USER
+    email_address: process.env.EMAIL_USER,
+    sessionActiveHours: 1
 };
