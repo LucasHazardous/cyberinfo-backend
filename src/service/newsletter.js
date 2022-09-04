@@ -44,6 +44,11 @@ module.exports = {
 
         emailTransport.sendMail(generateVerificationEmail(verificationToken, email));
     },
+    async leaveNewsletter(email) {
+        await Newsletter.deleteOne({
+            email: email
+        });
+    },
     async verify(verificationToken) {
         await Newsletter.updateOne({
             verificationToken: verificationToken
