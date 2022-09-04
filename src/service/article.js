@@ -26,13 +26,13 @@ module.exports = {
         return await Article.findById(id);
     },
     async getArticleList(page) {
-        return await Article.find({}).skip(page).sort({
+        return await Article.find({}).skip(page * config.documentsPerPage).sort({
             _id: -1
         }).limit(config.documentsPerPage);
     },
-    async likeArticle(articleTitle) {
+    async likeArticle(id) {
         await Article.updateOne({
-            title: articleTitle
+            _id: id
         }, {
             $inc: {
                 likes: 1
