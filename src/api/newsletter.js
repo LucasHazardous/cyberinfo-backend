@@ -37,4 +37,12 @@ router.post("/publish", body("subject").isString(), body("message_plain").isStri
         .catch(err => sendErrorStatusCode(err, res));
 });
 
+router.post("/leave", body("email").isString().isEmail(), (req, res) => {
+    if (handleValidationError(req, res)) return;
+
+    newsletter_service.leaveNewsletter(req.body.email)
+        .then(result => res.sendStatus(200))
+        .catch(err => sendErrorStatusCode(err, res));
+});
+
 module.exports = router;
