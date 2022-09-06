@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const helmet = require("helmet");
+const cors = require("cors");
 const compression = require("compression");
 const {
     port,
@@ -29,8 +30,7 @@ app.use(limiter);
 
 app.use(helmet());
 app.use(compression());
-
-app.use(require("cors"));
+app.use(cors());
 
 app.use(express.urlencoded({
     extended: true
