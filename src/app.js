@@ -30,6 +30,8 @@ app.use(limiter);
 app.use(helmet());
 app.use(compression());
 
+app.use(require("cors"));
+
 app.use(express.urlencoded({
     extended: true
 }));
