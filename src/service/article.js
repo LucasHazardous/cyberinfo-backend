@@ -26,7 +26,7 @@ module.exports = {
         return await Article.findById(id);
     },
     async findArticleByTitle(title) {
-        return await Article.find({
+        return await Article.findOne({
             title: title
         });
     },
