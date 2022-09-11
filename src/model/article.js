@@ -23,7 +23,7 @@ const articleSchema = new Schema({
         default: 0
     },
     categoryId: {
-        type: String,
+        type: Number,
         required: true
     }
 }, {
