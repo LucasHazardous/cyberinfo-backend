@@ -25,10 +25,25 @@ module.exports = {
     async findArticleById(id) {
         return await Article.findById(id);
     },
-    async getArticleList(page) {
-        return await Article.find({}).skip(page * config.documentsPerPage).sort({
+    async findArticleByTitle(title) {
+        return await Article.find({
+            title: title
+        });
+    },
+    async getNewestArticleList(page) {
+        return await Article.find({}).sort({
             _id: -1
-        }).limit(config.documentsPerPage);
+        }).skip(page * config.documentsPerPage).limit(config.documentsPerPage);
+    },
+    async getMostLikedArticleList(page) {
+        return await Article.find({}).sort({
+            likes: -1
+        }).skip(page * config.documentsPerPage).limit(config.documentsPerPage);
+    },
+    async getArticlesWithCategory(category) {
+        return await Article.find({
+            categoryId: category
+        });
     },
     async likeArticle(id) {
         await Article.updateOne({
