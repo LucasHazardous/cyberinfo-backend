@@ -37,7 +37,7 @@ router.get("/category/:category", param("category").isNumeric(), (req, res) => {
         .catch(err => sendErrorStatusCode(err, res));
 });
 
-router.get("/:id", param("id").isString().isMongoId(), (req, res) => {
+router.get("/id/:id", param("id").isString().isMongoId(), (req, res) => {
     if (handleValidationError(req, res)) return;
 
     article_service.findArticleById(req.params.id)
@@ -45,7 +45,7 @@ router.get("/:id", param("id").isString().isMongoId(), (req, res) => {
         .catch(err => sendErrorStatusCode(err, res));
 });
 
-router.get("/:title", param("title").isString(), (req, res) => {
+router.get("/title/:title", param("title").isString(), (req, res) => {
     if (handleValidationError(req, res)) return;
 
     article_service.findArticleByTitle(req.params.title)
