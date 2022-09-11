@@ -13,10 +13,26 @@ const {
     handleValidationError
 } = require("../error/api");
 
-router.get("/list/:page", param("page").isNumeric(), (req, res) => {
+router.get("/newest/:page", param("page").isNumeric(), (req, res) => {
     if (handleValidationError(req, res)) return;
 
-    article_service.getArticleList(req.params.page)
+    article_service.getNewestArticleList(req.params.page)
+        .then(result => res.json(result))
+        .catch(err => sendErrorStatusCode(err, res));
+});
+
+router.get("/most_liked/:page", param("page").isNumeric(), (req, res) => {
+    if (handleValidationError(req, res)) return;
+
+    article_service.getMostLikedArticleList(req.params.page)
+        .then(result => res.json(result))
+        .catch(err => sendErrorStatusCode(err, res));
+});
+
+router.get("/category/:category", param("category").isNumeric(), (req, res) => {
+    if (handleValidationError(req, res)) return;
+
+    article_service.getArticlesWithCategory(req.params.category)
         .then(result => res.json(result))
         .catch(err => sendErrorStatusCode(err, res));
 });
@@ -25,6 +41,14 @@ router.get("/:id", param("id").isString().isMongoId(), (req, res) => {
     if (handleValidationError(req, res)) return;
 
     article_service.findArticleById(req.params.id)
+        .then(result => res.json(result))
+        .catch(err => sendErrorStatusCode(err, res));
+});
+
+router.get("/:title", param("title").isString(), (req, res) => {
+    if (handleValidationError(req, res)) return;
+
+    article_service.findArticleByTitle(req.params.title)
         .then(result => res.json(result))
         .catch(err => sendErrorStatusCode(err, res));
 });
