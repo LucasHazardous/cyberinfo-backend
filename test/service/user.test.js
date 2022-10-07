@@ -30,6 +30,12 @@ test("Admin can create user", async () => {
     expect(response).toBe(tmpUser.username);
 });
 
+test("Admin can delete user", async () => {
+    const response = await user_service.deleteUser(tmpUser.username, tmpToken);
+
+    expect(response).toBeTruthy();
+});
+
 test("User can log out", async () => {
     const response = await user_service.logout(tmpToken);
 
