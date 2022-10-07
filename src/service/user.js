@@ -67,7 +67,8 @@ module.exports = {
             password: hashPassword(password)
         };
 
-        await User.create(newUser);
+        const res = await User.create(newUser);
+        return res.toJSON().username;
     },
     async deleteUser(username, token) {
         await this.authorizeAdmin(token);
