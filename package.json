@@ -27,6 +27,7 @@
     "nodemailer": "^6.7.8"
   },
   "devDependencies": {
+    "@types/jest": "^29.1.2",
     "jest": "^28.1.3"
   }
 }
