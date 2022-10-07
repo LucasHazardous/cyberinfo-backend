@@ -54,9 +54,10 @@ module.exports = {
         return authenticationErrorMsg;
     },
     async logout(token) {
-        await Session.deleteOne({
+        const res = await Session.deleteOne({
             token: token
         });
+        return res.acknowledged;
     },
     async createUser(username, password, token) {
         await this.authorizeAdmin(token);
@@ -66,14 +67,16 @@ module.exports = {
             password: hashPassword(password)
         };
 
-        await User.create(newUser);
+        const res = await User.create(newUser);
+        return res.toJSON().username;
     },
     async deleteUser(username, token) {
         await this.authorizeAdmin(token);
 
-        await User.deleteOne({
+        const res = await User.deleteOne({
             username: username
         });
+        return res.acknowledged;
     },
     async authorizeUser(token) {
         if (!(await Session.findOne({
