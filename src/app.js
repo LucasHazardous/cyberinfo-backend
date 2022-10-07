@@ -46,3 +46,8 @@ connection.once("open", () => {
         console.log(`Listening on port ${port}`);
     });
 });
+
+process.on("exit", async () => {
+    await mongoose.connection.close();
+    process.exit();
+});
