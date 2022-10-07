@@ -73,9 +73,10 @@ module.exports = {
     async deleteUser(username, token) {
         await this.authorizeAdmin(token);
 
-        await User.deleteOne({
+        const res = await User.deleteOne({
             username: username
         });
+        return res.acknowledged;
     },
     async authorizeUser(token) {
         if (!(await Session.findOne({
