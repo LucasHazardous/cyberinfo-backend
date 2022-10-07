@@ -54,9 +54,10 @@ module.exports = {
         return authenticationErrorMsg;
     },
     async logout(token) {
-        await Session.deleteOne({
+        const res = await Session.deleteOne({
             token: token
         });
+        return res.acknowledged;
     },
     async createUser(username, password, token) {
         await this.authorizeAdmin(token);
