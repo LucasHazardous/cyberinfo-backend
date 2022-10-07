@@ -5,6 +5,10 @@ const mongoose = require("mongoose");
 const user_service = require("../../src/service/user");
 
 var tmpToken;
+var tmpUser = {
+    "username": "tmpuser",
+    "password": "tmppass"
+};
 
 beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URI);
@@ -18,6 +22,12 @@ test("User can log in", async () => {
     tmpToken = response;
 
     console.log(`Logged with token ${tmpToken}`);
+});
+
+test("Admin can create user", async () => {
+    const response = await user_service.createUser(tmpUser.username, tmpUser.password, tmpToken);
+
+    expect(response).toBe(tmpUser.username);
 });
 
 test("User can log out", async () => {
