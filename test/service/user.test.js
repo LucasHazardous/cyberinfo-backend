@@ -20,6 +20,12 @@ test("User can log in", async () => {
     console.log(`Logged with token ${tmpToken}`);
 });
 
+test("User can log out", async () => {
+    const response = await user_service.logout(tmpToken);
+
+    expect(response).toBeTruthy();
+});
+
 afterAll(async () => {
     await mongoose.connection.close();
 });
