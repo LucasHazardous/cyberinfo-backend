@@ -37,17 +37,26 @@ module.exports = {
     async joinNewsletter(email) {
         const verificationToken = generateVerificationToken(email);
 
-        await Newsletter.create({
+        const existing = await Newsletter.findOne({
+            "email": email
+        });
+
+        if (existing !== null) return false;
+
+        const insertionRes = await Newsletter.create({
             email: email,
             verificationToken: verificationToken
         });
 
-        emailTransport.sendMail(generateVerificationEmail(verificationToken, email));
+        const emailRes = await emailTransport.sendMail(generateVerificationEmail(verificationToken, email));
+
+        return (insertionRes.email === email) && emailRes.accepted.includes(email);
     },
     async leaveNewsletter(email) {
-        await Newsletter.deleteOne({
+        const res = await Newsletter.deleteOne({
             email: email
         });
+        return res.acknowledged;
     },
     async verify(verificationToken) {
         await Newsletter.updateOne({
