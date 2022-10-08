@@ -36,6 +36,12 @@ test("Get article by title (and save id)", async () => {
     tmpArticleId = res._id;
 });
 
+test("Delete article by id", async () => {
+    const res = await article_service.deleteArticle(tmpArticleId, tmpToken);
+
+    expect(res).toBeTruthy();
+});
+
 afterAll(async () => {
     await mongoose.connection.close();
 });
