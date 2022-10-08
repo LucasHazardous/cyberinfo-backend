@@ -6,7 +6,7 @@ module.exports = {
     async createArticle(title, content, image, categoryId, token) {
         await user_service.authorizeUser(token);
 
-        await Article.findOneAndUpdate({
+        const res = await Article.findOneAndUpdate({
             title: title
         }, {
             title: title,
@@ -14,13 +14,17 @@ module.exports = {
             image: image,
             categoryId: categoryId,
         }, {
-            upsert: true
+            upsert: true,
+            new: true
         });
+
+        return res.title;
     },
     async deleteArticle(id, token) {
         await user_service.authorizeUser(token);
 
-        await Article.findByIdAndDelete(id);
+        const res = await Article.findByIdAndDelete(id);
+        return res.title;
     },
     async findArticleById(id) {
         return await Article.findById(id);
@@ -46,12 +50,13 @@ module.exports = {
         });
     },
     async likeArticle(id) {
-        await Article.updateOne({
+        const res = await Article.updateOne({
             _id: id
         }, {
             $inc: {
                 likes: 1
             }
         });
+        return res.acknowledged;
     }
 };
