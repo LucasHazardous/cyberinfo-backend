@@ -61,6 +61,12 @@ test("Get newest article list", async () => {
     expect(res.length).toBeGreaterThanOrEqual(1);
 });
 
+test("Get most liked article list", async () => {
+    const res = await article_service.getMostLikedArticleList(0);
+
+    expect(res.length).toBeGreaterThanOrEqual(1);
+});
+
 test("Delete article by id", async () => {
     const res = await article_service.deleteArticle(tmpArticleId, tmpToken);
 
