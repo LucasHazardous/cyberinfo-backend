@@ -42,6 +42,13 @@ test("Like article", async () => {
     expect(res).toBeTruthy();
 });
 
+test("Get article by id", async () => {
+    const res = await article_service.findArticleById(tmpArticleId);
+
+    expect(res.title).toBe(tmpArticle.title);
+    expect(res.likes).toBe(1);
+});
+
 test("Delete article by id", async () => {
     const res = await article_service.deleteArticle(tmpArticleId, tmpToken);
 
