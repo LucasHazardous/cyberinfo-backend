@@ -49,6 +49,12 @@ test("Get article by id", async () => {
     expect(res.likes).toBe(1);
 });
 
+test("Get article with category", async () => {
+    const res = await article_service.getArticlesWithCategory(tmpCategory);
+
+    expect(res.length).toBeGreaterThanOrEqual(1);
+});
+
 test("Delete article by id", async () => {
     const res = await article_service.deleteArticle(tmpArticleId, tmpToken);
 
