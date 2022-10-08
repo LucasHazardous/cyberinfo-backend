@@ -28,6 +28,14 @@ test("Create article", async () => {
     expect(res).toBe(tmpArticle.title);
 });
 
+test("Get article by title (and save id)", async () => {
+    const res = await article_service.findArticleByTitle(tmpArticle.title);
+
+    expect(res.title).toBeDefined();
+
+    tmpArticleId = res._id;
+});
+
 afterAll(async () => {
     await mongoose.connection.close();
 });
