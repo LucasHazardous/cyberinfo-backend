@@ -68,7 +68,7 @@ module.exports = {
         };
 
         const res = await User.create(newUser);
-        return res.toJSON().username;
+        return res.username;
     },
     async deleteUser(username, token) {
         await this.authorizeAdmin(token);
