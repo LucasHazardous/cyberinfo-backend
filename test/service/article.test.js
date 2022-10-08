@@ -36,6 +36,12 @@ test("Get article by title (and save id)", async () => {
     tmpArticleId = res._id;
 });
 
+test("Like article", async () => {
+    const res = await article_service.likeArticle(tmpArticleId);
+
+    expect(res).toBeTruthy();
+});
+
 test("Delete article by id", async () => {
     const res = await article_service.deleteArticle(tmpArticleId, tmpToken);
 
