@@ -4,8 +4,8 @@ const {
 const mongoose = require("mongoose");
 const user_service = require("../../src/service/user");
 
-var tmpToken;
-var tmpUser = {
+let tmpToken;
+const tmpUser = {
     "username": "tmpuser",
     "password": "tmppass"
 };
@@ -15,31 +15,31 @@ beforeAll(async () => {
 });
 
 test("User can log in", async () => {
-    const response = await user_service.login(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
+    const res = await user_service.login(process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
 
-    expect(response).not.toBe(authenticationErrorMsg);
+    expect(res).not.toBe(authenticationErrorMsg);
 
-    tmpToken = response;
+    tmpToken = res;
 
     console.log(`Logged with token ${tmpToken}`);
 });
 
 test("Admin can create user", async () => {
-    const response = await user_service.createUser(tmpUser.username, tmpUser.password, tmpToken);
+    const res = await user_service.createUser(tmpUser.username, tmpUser.password, tmpToken);
 
-    expect(response).toBe(tmpUser.username);
+    expect(res).toBe(tmpUser.username);
 });
 
 test("Admin can delete user", async () => {
-    const response = await user_service.deleteUser(tmpUser.username, tmpToken);
+    const res = await user_service.deleteUser(tmpUser.username, tmpToken);
 
-    expect(response).toBeTruthy();
+    expect(res).toBeTruthy();
 });
 
 test("User can log out", async () => {
-    const response = await user_service.logout(tmpToken);
+    const res = await user_service.logout(tmpToken);
 
-    expect(response).toBeTruthy();
+    expect(res).toBeTruthy();
 });
 
 afterAll(async () => {
