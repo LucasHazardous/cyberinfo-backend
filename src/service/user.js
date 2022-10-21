@@ -92,5 +92,14 @@ module.exports = {
             username: sessionData.username
         });
         if (!userData.admin) throw authorizationErrorMsg;
+    },
+    async getUserList(token) {
+        await this.authorizeAdmin(token);
+
+        const res = await User.find({}, {
+            _id: 0,
+            password: 0
+        });
+        return res;
     }
 };
