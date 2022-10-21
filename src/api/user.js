@@ -55,4 +55,12 @@ router.delete("/:username", param("username").isString(), body("token").isString
         .catch(err => sendErrorStatusCode(err, res));
 });
 
+router.post("/list", body("token").isString().isHexadecimal(), (req, res) => {
+    if (handleValidationError(req, res)) return;
+
+    user_service.getUserList(req.body.token)
+        .then(result => res.json(result))
+        .catch(err => sendErrorStatusCode(err, res));
+});
+
 module.exports = router;
