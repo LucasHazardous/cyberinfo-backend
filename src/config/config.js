@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 module.exports = {
-    port: 80,
+    port: process.env.PORT,
     minPasswordLength: 8,
     documentsPerPage: 10,
     authorizationErrorMsg: "Authorization failed",
