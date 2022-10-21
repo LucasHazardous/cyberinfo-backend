@@ -30,6 +30,14 @@ test("Admin can create user", async () => {
     expect(res).toBe(tmpUser.username);
 });
 
+test("Admin can get user list", async () => {
+    const res = await user_service.getUserList(tmpToken);
+
+    console.log(res);
+
+    expect(res.length).toBeGreaterThanOrEqual(2);
+});
+
 test("Admin can delete user", async () => {
     const res = await user_service.deleteUser(tmpUser.username, tmpToken);
 
