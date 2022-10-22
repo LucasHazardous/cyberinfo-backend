@@ -17,7 +17,7 @@ router.post("/join", body("email").isString().isEmail(), (req, res) => {
     if (handleValidationError(req, res)) return;
 
     newsletter_service.joinNewsletter(req.body.email)
-        .then(result => res.sendStatus(200))
+        .then(result => res.sendStatus(result ? 200 : 403))
         .catch(err => sendErrorStatusCode(err, res));
 });
 
@@ -25,7 +25,7 @@ router.get("/verify/:verificationToken", param("verificationToken").isString(), 
     if (handleValidationError(req, res)) return;
 
     newsletter_service.verify(req.params.verificationToken)
-        .then(result => res.sendStatus(200))
+        .then(result => res.sendStatus(result ? 200 : 403))
         .catch(err => sendErrorStatusCode(err, res));
 });
 
@@ -41,7 +41,7 @@ router.post("/leave", body("email").isString().isEmail(), (req, res) => {
     if (handleValidationError(req, res)) return;
 
     newsletter_service.leaveNewsletter(req.body.email)
-        .then(result => res.sendStatus(200))
+        .then(result => res.sendStatus(result ? 200 : 500))
         .catch(err => sendErrorStatusCode(err, res));
 });
 
