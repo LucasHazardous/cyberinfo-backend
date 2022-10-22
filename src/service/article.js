@@ -57,6 +57,6 @@ module.exports = {
                 likes: 1
             }
         });
-        return res.acknowledged;
+        return res.modifiedCount;
     }
 };
