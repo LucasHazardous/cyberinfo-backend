@@ -56,16 +56,17 @@ module.exports = {
         const res = await Newsletter.deleteOne({
             email: email
         });
-        return res.acknowledged;
+        return res.deletedCount;
     },
     async verify(verificationToken) {
-        await Newsletter.updateOne({
+        const res = await Newsletter.updateOne({
             verificationToken: verificationToken
         }, {
             $unset: {
                 verificationToken: 1
             }
         });
+        return res.modifiedCount;
     },
     async sendNewsletterToVerifiedPeople(subject, message_plain, message_html, token) {
         await user_service.authorizeUser(token);
