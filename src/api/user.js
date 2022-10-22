@@ -33,7 +33,7 @@ router.post("/logout", body("token").isString().isHexadecimal(), (req, res) => {
     if (handleValidationError(req, res)) return;
 
     user_service.logout(req.body.token)
-        .then(result => res.sendStatus(200))
+        .then(result => res.sendStatus(result ? 200 : 404))
         .catch(err => sendErrorStatusCode(err, res));
 });
 
@@ -43,7 +43,7 @@ router.post("/", body("username").isString(), body("password").isString().isLeng
     if (handleValidationError(req, res)) return;
 
     user_service.createUser(req.body.username, req.body.password, req.body.token)
-        .then(result => res.sendStatus(200))
+        .then(result => res.sendStatus(result !== null ? 200 : 403))
         .catch(err => sendErrorStatusCode(err, res));
 });
 
@@ -51,7 +51,7 @@ router.delete("/:username", param("username").isString(), body("token").isString
     if (handleValidationError(req, res)) return;
 
     user_service.deleteUser(req.params.username, req.body.token)
-        .then(result => res.sendStatus(200))
+        .then(result => res.sendStatus(result ? 200 : 404))
         .catch(err => sendErrorStatusCode(err, res));
 });
 
