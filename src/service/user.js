@@ -57,7 +57,7 @@ module.exports = {
         const res = await Session.deleteOne({
             token: token
         });
-        return res.acknowledged;
+        return res.deletedCount;
     },
     async createUser(username, password, token) {
         await this.authorizeAdmin(token);
@@ -67,8 +67,12 @@ module.exports = {
             password: hashPassword(password)
         };
 
-        const res = await User.create(newUser);
-        return res.username;
+        try {
+            const res = await User.create(newUser);
+            return res.username;
+        } catch (error) {
+            return null;
+        }
     },
     async deleteUser(username, token) {
         await this.authorizeAdmin(token);
@@ -76,7 +80,7 @@ module.exports = {
         const res = await User.deleteOne({
             username: username
         });
-        return res.acknowledged;
+        return res.deletedCount;
     },
     async authorizeUser(token) {
         if (!(await Session.findOne({
