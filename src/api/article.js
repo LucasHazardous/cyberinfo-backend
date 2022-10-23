@@ -65,7 +65,7 @@ router.delete("/:id", param("id").isString().isMongoId(), body("token").isString
     if (handleValidationError(req, res)) return;
 
     article_service.deleteArticle(req.params.id, req.body.token)
-        .then(result => res.sendStatus(200))
+        .then(result => res.sendStatus(result ? 200 : 404))
         .catch(err => sendErrorStatusCode(err, res));
 });
 
