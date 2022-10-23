@@ -24,7 +24,7 @@ module.exports = {
         await user_service.authorizeUser(token);
 
         const res = await Article.findByIdAndDelete(id);
-        return res.title;
+        return res !== null;
     },
     async findArticleById(id) {
         return await Article.findById(id);
