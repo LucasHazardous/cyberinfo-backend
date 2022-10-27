@@ -5,6 +5,17 @@ on:
     branches:
       - main
 
+env:
+  PORT: ${{ secrets.PORT }}
+  MONGO_URI: ${{ secrets.MONGO_URI }}
+  SALT: ${{ secrets.SALT }}
+  EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+  EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+  EMAIL_USER: ${{ secrets.EMAIL_USER }}
+  EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+  ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+  ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+
 jobs:
   test-with-jest:
 
