@@ -1,4 +1,5 @@
 name: Test with jest
+
 on:
   push:
     branches:
@@ -19,7 +20,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        uses: npm ci
+        run: npm ci
 
       - name: Run tests
-        uses: npm test
+        run: npm test
