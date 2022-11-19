@@ -1,6 +1,7 @@
 const {
     authorizationErrorMsg,
-    authenticationErrorMsg
+    authenticationErrorMsg,
+    fileUploadErrorMsg
 } = require("../config/config");
 
 const {
@@ -12,6 +13,7 @@ module.exports = {
         console.log(err);
         if (err === authorizationErrorMsg) res.sendStatus(403);
         else if (err === authenticationErrorMsg) res.sendStatus(401);
+        else if (err === fileUploadErrorMsg) res.sendStatus(400);
         else res.sendStatus(500);
     },
     handleValidationError(req, res) {
