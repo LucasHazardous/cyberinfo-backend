@@ -41,6 +41,7 @@ connection.once("open", () => {
     app.use("/api/user", require("./api/user"));
     app.use("/api/article", require("./api/article"));
     app.use("/api/newsletter", require("./api/newsletter"));
+    app.use("/api/upload", require("./api/upload"))
 
     app.listen(port, () => {
         console.log(`Listening on port ${port}`);
