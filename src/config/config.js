@@ -21,5 +21,8 @@ module.exports = {
     }),
     email_address: process.env.EMAIL_USER,
     sessionActiveHours: 1,
-    maxUploadFileSize: 10 * 1024 * 1024
+    maxUploadFileSize: 10 * 1024 * 1024,
+    ftp_host: process.env.FTP_HOST,
+    ftp_user: process.env.FTP_USER,
+    ftp_password: process.env.FTP_PASSWORD
 };
