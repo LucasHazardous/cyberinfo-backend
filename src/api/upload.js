@@ -23,7 +23,7 @@ const {
     handleValidationError
 } = require("../error/api");
 
-async function removeAnduploadFileFTP(filename) {
+async function removeAndUploadFileFTP(filename) {
     const client = new ftp.Client();
     await client.access({
         host: config.ftp_host,
@@ -31,10 +31,10 @@ async function removeAnduploadFileFTP(filename) {
         password: config.ftp_password,
         secure: false
     });
-    await client.uploadFrom(__dirname + "/" + filename, filename);
+    await client.uploadFrom(`${__dirname}/${filename}`, filename);
     client.close();
 
-    await fs.unlink(__dirname + "/" + filename, (err) => {
+    await fs.unlink(`${__dirname}/${filename}`, (err) => {
         if (err) throw err;
     });
 }
@@ -47,11 +47,13 @@ router.post("/image", body("token").isString().isHexadecimal(), (req, res) => {
 
     const img = req.files.image;
 
-    img.mv(__dirname + "/" + img.name, (err) => {
+    img.mv(`${__dirname}/${img.name}`, (err) => {
         if (err)
             return sendErrorStatusCode(err, res);
+
+        removeAndUploadFileFTP(img.name).catch(err => sendErrorStatusCode(err, res));
+
         res.sendStatus(200);
-        removeAnduploadFileFTP(img.name).catch(err => console.log(err));
     });
 });
 
