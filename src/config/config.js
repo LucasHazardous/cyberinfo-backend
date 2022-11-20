@@ -24,5 +24,6 @@ module.exports = {
     maxUploadFileSize: 10 * 1024 * 1024,
     ftp_host: process.env.FTP_HOST,
     ftp_user: process.env.FTP_USER,
-    ftp_password: process.env.FTP_PASSWORD
+    ftp_password: process.env.FTP_PASSWORD,
+    allowedFTPFileMimetypes: new Set(["image/png", "image/jpeg", "image/jpg", "image/gif"])
 };

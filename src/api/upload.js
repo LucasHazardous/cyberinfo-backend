@@ -47,6 +47,9 @@ router.post("/image", body("token").isString().isHexadecimal(), (req, res) => {
 
     const img = req.files.image;
 
+    if (!config.allowedFTPFileMimetypes.has(img.mimetype))
+        return sendErrorStatusCode(config.fileUploadErrorMsg, res);
+
     img.mv(`${__dirname}/${img.name}`, (err) => {
         if (err)
             return sendErrorStatusCode(err, res);
