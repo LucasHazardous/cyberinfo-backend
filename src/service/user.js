@@ -3,7 +3,8 @@ const User = require("../model/user");
 const crypto = require("crypto");
 const {
     authorizationErrorMsg,
-    authenticationErrorMsg
+    authenticationErrorMsg,
+    userExistsErrorMsg
 } = require("../config/config");
 
 function generateToken(username) {
@@ -71,7 +72,7 @@ module.exports = {
             const res = await User.create(newUser);
             return res.username;
         } catch (error) {
-            return null;
+            throw userExistsErrorMsg;
         }
     },
     async deleteUser(username, token) {

@@ -8,6 +8,7 @@ module.exports = {
     authorizationErrorMsg: "Authorization failed",
     authenticationErrorMsg: "Authentication failed",
     fileUploadErrorMsg: "File upload failed",
+    userExistsErrorMsg: "User already exists",
     maxRequestsPerTimeFrame: 100,
     requestsTimeFrameMinutes: 30 * 60000,
     emailTransport: nodemailer.createTransport({
