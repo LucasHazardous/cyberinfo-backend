@@ -51,7 +51,7 @@ module.exports = {
             });
             return token;
         }
-        return authenticationErrorMsg;
+        throw authenticationErrorMsg;
     },
     async logout(token) {
         const res = await Session.deleteOne({
