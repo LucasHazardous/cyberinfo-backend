@@ -13,12 +13,24 @@ const {
 module.exports = {
     sendErrorStatusCode(err, res) {
         console.log(err);
-        if (err === authorizationErrorMsg) res.status(401).send(authorizationErrorMsg);
-        else if (err === accessDeniedErrorMsg) res.status(403).send(accessDeniedErrorMsg);
-        else if (err === authenticationErrorMsg) res.status(401).send(authenticationErrorMsg);
-        else if (err === fileUploadErrorMsg) res.status(400).send(fileUploadErrorMsg);
-        else if (err === userExistsErrorMsg) res.status(409).send(userExistsErrorMsg);
-        else res.sendStatus(500);
+        let status = 500;
+        switch (err) {
+            case authenticationErrorMsg:
+            case authorizationErrorMsg:
+                status = 401;
+                break;
+            case accessDeniedErrorMsg:
+                status = 403;
+                break;
+            case fileUploadErrorMsg:
+                status = 400;
+                break;
+            case userExistsErrorMsg:
+                status = 409;
+                break;
+        }
+        if (status === 500) res.sendStatus(status);
+        else res.status(status).send(err);
     },
     handleValidationError(req, res) {
         const errors = validationResult(req);
