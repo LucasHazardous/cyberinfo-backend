@@ -3,7 +3,8 @@ const user_service = require("./user");
 const crypto = require("crypto");
 const {
     emailTransport,
-    email_address
+    email_address,
+    apiDomain
 } = require("../config/config");
 
 function generateVerificationToken(email) {
@@ -14,12 +15,13 @@ function generateVerificationToken(email) {
 }
 
 function generateVerificationEmail(verificationToken, email) {
+    const verificationLink = `${apiDomain}/api/newsletter/verify/${verificationToken}`;
     return {
         from: `"Cyberinfo Newsletter" <${email_address}>`,
         to: email,
         subject: "Newsletter verification",
-        text: `localhost/api/newsletter/verify/${verificationToken}`,
-        html: `<a>localhost/api/newsletter/verify/${verificationToken}</a>`
+        text: verificationLink,
+        html: `<a>${verificationLink}</a>`
     }
 }
 
