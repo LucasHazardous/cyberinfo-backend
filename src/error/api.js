@@ -2,7 +2,8 @@ const {
     authorizationErrorMsg,
     authenticationErrorMsg,
     fileUploadErrorMsg,
-    userExistsErrorMsg
+    userExistsErrorMsg,
+    accessDeniedErrorMsg
 } = require("../config/config");
 
 const {
@@ -12,7 +13,8 @@ const {
 module.exports = {
     sendErrorStatusCode(err, res) {
         console.log(err);
-        if (err === authorizationErrorMsg) res.status(403).send(authorizationErrorMsg);
+        if (err === authorizationErrorMsg) res.status(401).send(authorizationErrorMsg);
+        else if (err === accessDeniedErrorMsg) res.status(403).send(accessDeniedErrorMsg);
         else if (err === authenticationErrorMsg) res.status(401).send(authenticationErrorMsg);
         else if (err === fileUploadErrorMsg) res.status(400).send(fileUploadErrorMsg);
         else if (err === userExistsErrorMsg) res.status(409).send(userExistsErrorMsg);

@@ -4,7 +4,8 @@ const crypto = require("crypto");
 const {
     authorizationErrorMsg,
     authenticationErrorMsg,
-    userExistsErrorMsg
+    userExistsErrorMsg,
+    accessDeniedErrorMsg
 } = require("../config/config");
 
 function generateToken(username) {
@@ -96,7 +97,7 @@ module.exports = {
         const userData = await User.findOne({
             username: sessionData.username
         });
-        if (!userData.admin) throw authorizationErrorMsg;
+        if (!userData.admin) throw accessDeniedErrorMsg;
     },
     async getUserList(token) {
         await this.authorizeAdmin(token);
