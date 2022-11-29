@@ -15,7 +15,7 @@ function generateVerificationToken(email) {
 }
 
 function generateVerificationEmail(verificationToken, email) {
-    const verificationLink = `${apiDomain}/api/newsletter/verify/${verificationToken}`;
+    const verificationLink = `${apiDomain == undefined ? "localhost" : apiDomain}/api/newsletter/verify/${verificationToken}`;
     return {
         from: `"Cyberinfo Newsletter" <${email_address}>`,
         to: email,
