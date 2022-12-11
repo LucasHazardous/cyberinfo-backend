@@ -34,5 +34,8 @@
     "husky": "^8.0.2",
     "jest": "^29.0.0",
     "prettier": "^2.8.1"
+  },
+  "lint-staged": {
+    "*.{js,yml,md,json}": "prettier --write"
   }
 }
