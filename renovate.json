@@ -1,20 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ],
+  "extends": ["config:base"],
   "packageRules": [
     {
-      "updateTypes": [
-        "minor",
-        "patch"
-      ],
+      "updateTypes": ["minor", "patch"],
       "automerge": true
     }
   ],
   "timezone": "Europe/Warsaw",
-  "schedule": [
-    "after 2am",
-    "before 8am"
-  ]
+  "schedule": ["after 2am", "before 8am"]
 }

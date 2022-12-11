@@ -1,21 +1,22 @@
 const mongoose = require('mongoose');
-const {
-    Schema
-} = mongoose;
+const { Schema } = mongoose;
 
-const newsletterSchema = new Schema({
+const newsletterSchema = new Schema(
+  {
     email: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     verificationToken: {
-        type: String,
-        unique: true,
-        sparse: true
-    }
-}, {
-    versionKey: false
-});
+      type: String,
+      unique: true,
+      sparse: true,
+    },
+  },
+  {
+    versionKey: false,
+  }
+);
 
-module.exports = mongoose.model("Newsletter", newsletterSchema);
+module.exports = mongoose.model('Newsletter', newsletterSchema);
