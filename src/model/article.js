@@ -9,6 +9,10 @@ const articleSchema = new Schema({
         required: true,
         unique: true
     },
+    author: {
+        type: String,
+        required: true
+    },
     content: {
         type: String,
         required: true,

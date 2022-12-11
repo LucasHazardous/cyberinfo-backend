@@ -53,10 +53,10 @@ router.get("/title/:title", param("title").isString(), (req, res) => {
         .catch(err => sendErrorStatusCode(err, res));
 });
 
-router.post("/", body("title").isString(), body("content").isString(), body("image").isString(), body("categoryId").isString(), body("token").isString().isHexadecimal(), (req, res) => {
+router.post("/", body("title").isString(), body("author").isString(), body("content").isString(), body("image").isString(), body("categoryId").isString(), body("token").isString().isHexadecimal(), (req, res) => {
     if (handleValidationError(req, res)) return;
 
-    article_service.createArticle(req.body.title, req.body.content, req.body.image, req.body.categoryId, req.body.token)
+    article_service.createArticle(req.body.title, req.body.author, req.body.content, req.body.image, req.body.categoryId, req.body.token)
         .then(result => res.sendStatus(200))
         .catch(err => sendErrorStatusCode(err, res));
 });
