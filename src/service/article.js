@@ -39,6 +39,15 @@ module.exports = {
       title: title,
     });
   },
+  async getSearchResults(term, page) {
+    return await Article.find({
+      $text: {
+        $search: term,
+      },
+    })
+      .skip(page * config.documentsPerPage)
+      .limit(config.documentsPerPage);
+  },
   async getNewestArticleList(page) {
     return await Article.find({})
       .sort({
