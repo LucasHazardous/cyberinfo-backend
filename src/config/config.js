@@ -34,4 +34,9 @@ module.exports = {
     'image/gif',
   ]),
   apiDomain: process.env.API_DOMAIN,
+  articleListProjection: {
+    title: 1,
+    image: 1,
+    categoryId: 1,
+  },
 };

@@ -40,16 +40,19 @@ module.exports = {
     });
   },
   async getSearchResults(term, page) {
-    return await Article.find({
-      $text: {
-        $search: term,
+    return await Article.find(
+      {
+        $text: {
+          $search: term,
+        },
       },
-    })
+      config.articleListProjection
+    )
       .skip(page * config.documentsPerPage)
       .limit(config.documentsPerPage);
   },
   async getNewestArticleList(page) {
-    return await Article.find({})
+    return await Article.find({}, config.articleListProjection)
       .sort({
         _id: -1,
       })
@@ -57,7 +60,7 @@ module.exports = {
       .limit(config.documentsPerPage);
   },
   async getMostLikedArticleList(page) {
-    return await Article.find({})
+    return await Article.find({}, config.articleListProjection)
       .sort({
         likes: -1,
       })
@@ -65,9 +68,12 @@ module.exports = {
       .limit(config.documentsPerPage);
   },
   async getArticlesWithCategory(category) {
-    return await Article.find({
-      categoryId: category,
-    });
+    return await Article.find(
+      {
+        categoryId: category,
+      },
+      config.articleListProjection
+    );
   },
   async likeArticle(id) {
     const res = await Article.updateOne(
