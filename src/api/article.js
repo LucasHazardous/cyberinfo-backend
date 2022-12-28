@@ -3,7 +3,7 @@ const router = express.Router();
 
 const article_service = require('../service/article');
 
-const { body, param } = require('express-validator');
+const { body, param, query } = require('express-validator');
 
 const { sendErrorStatusCode, handleValidationError } = require('../error/api');
 
@@ -33,6 +33,23 @@ router.get('/category/:category', param('category').isNumeric(), (req, res) => {
     .then((result) => res.json(result))
     .catch((err) => sendErrorStatusCode(err, res));
 });
+
+router.get(
+  '/search/:page',
+  query('term').isString().isLength({
+    min: 4,
+    max: 20,
+  }),
+  param('page').isNumeric(),
+  (req, res) => {
+    if (handleValidationError(req, res)) return;
+
+    article_service
+      .getSearchResults(req.query.term, req.params.page)
+      .then((result) => res.json(result))
+      .catch((err) => sendErrorStatusCode(err, res));
+  }
+);
 
 router.get('/id/:id', param('id').isString().isMongoId(), (req, res) => {
   if (handleValidationError(req, res)) return;
