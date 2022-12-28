@@ -73,6 +73,17 @@ test('Get most liked article list', async () => {
   expect(res.length).toBeGreaterThanOrEqual(1);
 });
 
+test('Search article by title', async () => {
+  const res = await article_service.getSearchResults(
+    tmpArticle.title.slice(0, 5),
+    0
+  );
+
+  console.log(res);
+
+  expect(res.length).toBeGreaterThanOrEqual(1);
+});
+
 test('Delete article by id', async () => {
   const res = await article_service.deleteArticle(tmpArticleId, tmpToken);
 
