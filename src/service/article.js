@@ -3,16 +3,17 @@ const user_service = require('./user');
 const config = require('../config/config');
 
 module.exports = {
-  async createArticle(title, author, content, image, categoryId, token) {
-    await user_service.authorizeUser(token);
+  async createArticle(title, content, image, categoryId, token) {
+    const userSession = await user_service.authorizeUser(token);
 
     const res = await Article.findOneAndUpdate(
       {
         title: title,
+        author: userSession.username,
       },
       {
         title: title,
-        author: author,
+        author: userSession.username,
         content: content,
         image: image,
         categoryId: categoryId,
