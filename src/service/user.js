@@ -105,6 +105,12 @@ module.exports = {
     });
     if (!userData.admin) throw accessDeniedErrorMsg;
   },
+  async isAdmin(username) {
+    const userData = await User.findOne({
+      username,
+    });
+    return userData.admin;
+  },
   async getUserList(token) {
     await this.authorizeAdmin(token);
 
