@@ -6,25 +6,31 @@ module.exports = {
   async createArticle(title, content, image, categoryId, token) {
     const userSession = await user_service.authorizeUser(token);
 
-    const res = await Article.findOneAndUpdate(
-      {
-        title: title,
-        author: userSession.username,
-      },
-      {
-        title: title,
-        author: userSession.username,
-        content: content,
-        image: image,
-        categoryId: categoryId,
-      },
-      {
-        upsert: true,
-        new: true,
-      }
-    );
-
-    return res.title;
+    try {
+      const res = await Article.findOneAndUpdate(
+        {
+          title: title,
+          ...(!(await user_service.isAdmin(userSession.username)) && {
+            author: userSession.username,
+          }),
+        },
+        {
+          title: title,
+          author: userSession.username,
+          content: content,
+          image: image,
+          categoryId: categoryId,
+        },
+        {
+          upsert: true,
+          new: true,
+        }
+      );
+      return res.title;
+    } catch (e) {
+      if (e.codeName === 'DuplicateKey') throw config.accessDeniedErrorMsg;
+      else throw e;
+    }
   },
   async deleteArticle(id, token) {
     await user_service.authorizeAdmin(token);
