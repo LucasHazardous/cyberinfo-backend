@@ -32,6 +32,18 @@ test('Create article', async () => {
   expect(res).toBe(tmpArticle.title);
 });
 
+test('Edit article', async () => {
+  const res = await article_service.createArticle(
+    tmpArticle.title,
+    tmpArticle.content + ' More testing.',
+    tmpArticle.image,
+    tmpArticle.categoryId,
+    tmpToken
+  );
+
+  expect(res).toBe(tmpArticle.title);
+});
+
 test('Get article by title (and save id)', async () => {
   const res = await article_service.findArticleByTitle(tmpArticle.title);
 
