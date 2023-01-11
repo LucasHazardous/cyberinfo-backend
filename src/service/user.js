@@ -89,12 +89,11 @@ module.exports = {
     return res.deletedCount;
   },
   async authorizeUser(token) {
-    if (
-      !(await Session.findOne({
-        token: token,
-      }))
-    )
-      throw authorizationErrorMsg;
+    const session = await Session.findOne({
+      token: token,
+    });
+    if (!session) throw authorizationErrorMsg;
+    return session;
   },
   async authorizeAdmin(token) {
     const sessionData = await Session.findOne({
