@@ -72,7 +72,6 @@ router.get('/title/:title', param('title').isString(), (req, res) => {
 router.post(
   '/',
   body('title').isString(),
-  body('author').isString(),
   body('content').isString(),
   body('image').isString(),
   body('categoryId').isString(),
@@ -83,7 +82,6 @@ router.post(
     article_service
       .createArticle(
         req.body.title,
-        req.body.author,
         req.body.content,
         req.body.image,
         req.body.categoryId,
