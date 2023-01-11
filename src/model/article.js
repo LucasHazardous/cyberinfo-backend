@@ -11,6 +11,7 @@ const articleSchema = new Schema(
     author: {
       type: String,
       required: true,
+      immutable: true,
     },
     content: {
       type: String,
