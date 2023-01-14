@@ -1,5 +1,6 @@
 const Session = require('../model/session');
 const User = require('../model/user');
+const Fabrication = require('../model/fabrication');
 const crypto = require('crypto');
 const {
   authorizationErrorMsg,
@@ -20,6 +21,13 @@ function hashPassword(password) {
     .createHash('sha512')
     .update(password + process.env.SALT)
     .digest('base64');
+}
+
+function generateUserFabricationToken() {
+  return crypto
+    .createHash('sha256')
+    .update(Date.now() + process.env.SALT)
+    .digest('hex');
 }
 
 async function createAdminIfNeeded() {
@@ -66,7 +74,9 @@ module.exports = {
     return res.deletedCount;
   },
   async createUser(username, password, token) {
-    await this.authorizeAdmin(token);
+    if (!(await Fabrication.findOne({ token: token })))
+      await this.authorizeAdmin(token);
+    else await Fabrication.deleteOne({ token: token });
 
     const newUser = {
       username: username,
@@ -122,5 +132,16 @@ module.exports = {
       }
     );
     return res;
+  },
+  async createUserFabricationToken(token) {
+    this.authorizeAdmin(token);
+
+    const fabricationToken = generateUserFabricationToken();
+
+    Fabrication.create({
+      token: fabricationToken,
+    });
+
+    return fabricationToken;
   },
 };

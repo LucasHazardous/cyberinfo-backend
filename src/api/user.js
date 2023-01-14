@@ -39,6 +39,19 @@ router.post('/logout', body('token').isString().isHexadecimal(), (req, res) => {
 });
 
 router.post(
+  '/fabrication',
+  body('token').isString().isHexadecimal(),
+  (req, res) => {
+    if (handleValidationError(req, res)) return;
+
+    user_service
+      .createUserFabricationToken(req.body.token)
+      .then((token) => res.json({ token }))
+      .catch((err) => sendErrorStatusCode(err, res));
+  }
+);
+
+router.post(
   '/',
   body('username').isString(),
   body('password').isString().isLength({
