@@ -84,10 +84,7 @@ test('Get most liked article list', async () => {
 });
 
 test('Search article by title', async () => {
-  const res = await article_service.getSearchResults(
-    tmpArticle.title.slice(0, 5),
-    0
-  );
+  const res = await article_service.getSearchResults('article', 0);
 
   console.log(res);
 
