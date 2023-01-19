@@ -47,16 +47,29 @@ module.exports = {
     });
   },
   async getSearchResults(term, page) {
-    return await Article.find(
+    return await Article.aggregate([
       {
-        $text: {
-          $search: term,
+        $search: {
+          index: 'articleSearch',
+          compound: {
+            must: [
+              {
+                text: {
+                  query: term,
+                  path: 'title',
+                },
+                text: {
+                  query: term,
+                  path: 'content',
+                },
+              },
+            ],
+          },
         },
       },
-      config.articleListProjection
-    )
-      .skip(page * config.documentsPerPage)
-      .limit(config.documentsPerPage);
+      { $skip: page * config.documentsPerPage },
+      { $limit: config.documentsPerPage },
+    ]);
   },
   async getNewestArticleList(page) {
     return await Article.find({}, config.articleListProjection)
