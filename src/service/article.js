@@ -51,19 +51,9 @@ module.exports = {
       {
         $search: {
           index: 'articleSearch',
-          compound: {
-            must: [
-              {
-                text: {
-                  query: term,
-                  path: 'title',
-                },
-                text: {
-                  query: term,
-                  path: 'content',
-                },
-              },
-            ],
+          autocomplete: {
+            query: term,
+            path: 'title',
           },
         },
       },
