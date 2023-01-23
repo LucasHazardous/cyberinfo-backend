@@ -54,6 +54,9 @@ module.exports = {
           autocomplete: {
             query: term,
             path: 'title',
+            fuzzy: {
+              prefixLength: 4,
+            },
           },
         },
       },
