@@ -62,6 +62,7 @@ module.exports = {
       },
       { $skip: page * config.documentsPerPage },
       { $limit: config.documentsPerPage },
+      { $project: config.articleListProjection },
     ]);
   },
   async getNewestArticleList(page) {
