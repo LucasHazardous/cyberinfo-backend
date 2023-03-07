@@ -29,7 +29,8 @@ test('Create article', async () => {
     tmpToken
   );
 
-  expect(res).toBe(tmpArticle.title);
+  expect(res).toBeTruthy();
+  tmpArticleId = res;
 });
 
 test('Edit article', async () => {
@@ -41,15 +42,7 @@ test('Edit article', async () => {
     tmpToken
   );
 
-  expect(res).toBe(tmpArticle.title);
-});
-
-test('Get article by title (and save id)', async () => {
-  const res = await article_service.findArticleByTitle(tmpArticle.title);
-
-  expect(res.title).toBeDefined();
-
-  tmpArticleId = res._id;
+  expect(res).toBe(tmpArticleId);
 });
 
 test('Like article', async () => {

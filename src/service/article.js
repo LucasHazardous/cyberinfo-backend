@@ -26,7 +26,7 @@ module.exports = {
           new: true,
         }
       );
-      return res.title;
+      return res.id;
     } catch (e) {
       if (e.codeName === 'DuplicateKey') throw config.accessDeniedErrorMsg;
       else throw e;
@@ -40,11 +40,6 @@ module.exports = {
   },
   async findArticleById(id) {
     return await Article.findById(id);
-  },
-  async findArticleByTitle(title) {
-    return await Article.findOne({
-      title: title,
-    });
   },
   async getSearchResults(term, page) {
     return await Article.aggregate([

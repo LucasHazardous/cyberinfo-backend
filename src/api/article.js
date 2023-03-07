@@ -60,15 +60,6 @@ router.get('/id/:id', param('id').isString().isMongoId(), (req, res) => {
     .catch((err) => sendErrorStatusCode(err, res));
 });
 
-router.get('/title/:title', param('title').isString(), (req, res) => {
-  if (handleValidationError(req, res)) return;
-
-  article_service
-    .findArticleByTitle(req.params.title)
-    .then((result) => res.json(result))
-    .catch((err) => sendErrorStatusCode(err, res));
-});
-
 router.post(
   '/',
   body('title').isString(),
