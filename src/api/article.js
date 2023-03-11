@@ -71,7 +71,9 @@ router.get(
 router.post(
   '/',
   body('title').isString(),
-  body('content').isString(),
+  body('content').isObject(),
+  body('content.pl').isString(),
+  body('content.en').isString(),
   body('image').isString(),
   body('categoryId').isString(),
   body('token').isString().isHexadecimal(),
