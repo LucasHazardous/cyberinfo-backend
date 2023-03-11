@@ -14,8 +14,14 @@ const articleSchema = new Schema(
       immutable: true,
     },
     content: {
-      type: String,
-      required: true,
+      pl: {
+        type: String,
+        required: true,
+      },
+      en: {
+        type: String,
+        required: true,
+      },
     },
     image: {
       type: String,
