@@ -2,6 +2,8 @@ const Article = require('../model/article');
 const user_service = require('./user');
 const config = require('../config/config');
 
+const { MongooseDocument } = require('mongoose');
+
 module.exports = {
   async createArticle(title, content, image, categoryId, token) {
     const userSession = await user_service.authorizeUser(token);
@@ -38,8 +40,19 @@ module.exports = {
     const res = await Article.findByIdAndDelete(id);
     return res !== null;
   },
-  async findArticleById(id) {
-    return await Article.findById(id);
+  async findArticleById(id, lang = 'pl') {
+    let foundArticle = await Article.findById(id);
+    if (!foundArticle) return foundArticle;
+
+    foundArticle = foundArticle.toObject();
+
+    if (lang == 'pl') {
+      foundArticle.content = foundArticle.content.pl;
+    } else if (lang == 'en') {
+      foundArticle.content = foundArticle.content.en;
+    }
+
+    return foundArticle;
   },
   async getSearchResults(term, page) {
     return await Article.aggregate([
