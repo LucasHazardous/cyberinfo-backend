@@ -2,8 +2,6 @@ const Article = require('../model/article');
 const user_service = require('./user');
 const config = require('../config/config');
 
-const { MongooseDocument } = require('mongoose');
-
 module.exports = {
   async createArticle(title, content, image, categoryId, token) {
     const userSession = await user_service.authorizeUser(token);
