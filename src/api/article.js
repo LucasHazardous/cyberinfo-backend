@@ -51,19 +51,29 @@ router.get(
   }
 );
 
-router.get('/id/:id', param('id').isString().isMongoId(), (req, res) => {
-  if (handleValidationError(req, res)) return;
+router.get(
+  '/id/:id',
+  param('id').isString().isMongoId(),
+  query('lang')
+    .optional()
+    .isString()
+    .matches(/^en$|^pl$/),
+  (req, res) => {
+    if (handleValidationError(req, res)) return;
 
-  article_service
-    .findArticleById(req.params.id)
-    .then((result) => res.json(result))
-    .catch((err) => sendErrorStatusCode(err, res));
-});
+    article_service
+      .findArticleById(req.params.id, req.query.lang)
+      .then((result) => res.json(result))
+      .catch((err) => sendErrorStatusCode(err, res));
+  }
+);
 
 router.post(
   '/',
   body('title').isString(),
-  body('content').isString(),
+  body('content').isObject(),
+  body('content.pl').isString(),
+  body('content.en').isString(),
   body('image').isString(),
   body('categoryId').isString(),
   body('token').isString().isHexadecimal(),
