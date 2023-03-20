@@ -85,6 +85,13 @@ test('Delete article by id', async () => {
   expect(res).toBeTruthy();
 });
 
+// This test is based on database article that is not created by this module. It is used because article added in this module has not time to get indexed and thus the search will not work on it.
+test('Search for article', async () => {
+  const res = await article_service.getSearchResults('logger', 0);
+
+  expect(res.map((article) => article.title)).toContain('Keylogger');
+});
+
 afterAll(async () => {
   await mongoose.connection.close();
 });
